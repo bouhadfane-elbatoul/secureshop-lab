@@ -1,19 +1,48 @@
-# SecureShop — Intentionally Vulnerable E-Commerce Lab
+# SecureShop — Audit de sécurité d'une application web
 
-An educational, deliberately-vulnerable full-stack e-commerce app for practicing web
-application security testing. **Run it locally only — never expose it to the internet.**
+> ⚠️ **Application à usage éducatif.** Elle a été conçue avec des vulnérabilités
+> volontaires puis auditée. À exécuter uniquement en local, ne jamais l'exposer sur Internet.
 
-Stack: React + Vite + Tailwind (frontend), FastAPI + SQLite + JWT (backend).
+## À propos du projet
 
-## Setup
+SecureShop est une application e-commerce (React + FastAPI + SQLite + JWT) utilisée comme
+laboratoire de test d'intrusion. J'ai détecté, exploité en local, expliqué puis corrigé
+7 vulnérabilités en suivant une méthodologie de pentest : reconnaissance, authentification,
+autorisation, validation des entrées, tests avancés.
+
+📄 Rapport complet : [lien vers le rapport]
+
+## Vulnérabilités corrigées
+
+| # | Vulnérabilité | Endpoint | CWE | Sévérité |
+|---|---|---|---|---|
+| 1 | Injection SQL | GET /api/products/search | CWE-89 | Critique |
+| 2 | IDOR | GET /api/orders/{id} | CWE-639 | Élevée |
+| 3 | Contrôle d'accès cassé | GET /api/admin/users | CWE-862 | Élevée |
+| 4 | XSS stockée | Avis produits | CWE-79 | Élevée |
+| 5 | Exposition excessive de données | GET /api/users/{id} | CWE-200 | Moyenne à élevée |
+| 6 | Upload de fichier non restreint | POST /api/users/me/avatar | CWE-434 | Élevée |
+| 7 | Manipulation de prix (logique métier) | POST /api/checkout | CWE-840 | Élevée |
+
+## Points identifiés, non corrigés
+
+- Secret JWT codé en dur et expiration de 30 jours (`backend/auth.py`)
+- Absence de limitation de débit sur le login
+- Headers de sécurité absents et CORS permissif
+
+## Technologies
+
+Frontend : React, Vite, Tailwind CSS · Backend : FastAPI, SQLAlchemy, SQLite, JWT
+
+## Installation
 
 ### Backend
 ```bash
 cd backend
-python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+python -m venv venv
+venv\Scripts\activate           # Linux/macOS : source venv/bin/activate
 pip install -r requirements.txt
-python seed_data.py             # creates & seeds secureshop.db
+python seed_data.py             # crée et remplit secureshop.db
 uvicorn main:app --reload --port 8000
 ```
 
@@ -24,23 +53,33 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173**. The backend runs on **http://localhost:8000**
-(interactive API docs at `/docs`).
+Frontend : http://localhost:5173 · API : http://localhost:8000 (documentation sur `/docs`)
 
-## Sample accounts
+## Comptes de test
 
-| username | password    | role     |
-|----------|-------------|----------|
-| alice    | alice123    | customer |
-| bob      | bobpassword | customer |
-| admin    | admin2024   | admin    |
+| Utilisateur | Mot de passe | Rôle |
+|---|---|---|
+| alice | alice123 | customer |
+| bob | bobpassword | customer |
+| admin | admin2024 | admin |
 
-## Scope
+## Structure du projet
 
-Everything runs on your machine against a local SQLite file. No outbound calls,
-no real payment processing, no real email sending. Safe to attack as much as you like —
-it's yours.
+```
+secureshop/
+├── backend/    API FastAPI, modèles, authentification, données de test
+└── frontend/   Application React (pages, composants, contextes)
+```
 
-## Resetting data
+## Périmètre
 
-Re-run `python seed_data.py` at any time to wipe and reseed the database.
+Tout s'exécute sur la machine locale avec une base SQLite : aucun appel externe,
+aucun vrai paiement, aucun envoi d'email. À tester uniquement sur sa propre copie locale.
+
+## Réinitialiser les données
+
+Relancer `python seed_data.py` pour réinitialiser la base.
+
+## Auteur
+
+Batoul [Nom de famille] — [lien LinkedIn ou email]
