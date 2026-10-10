@@ -82,4 +82,4 @@ Relancer `python seed_data.py` pour réinitialiser la base.
 
 ## Auteur
 
-Batoul [Nom de famille] — [lien LinkedIn ou email]
+Bouhadfane Elbatoul — e_bouhadfane@estin.dz
