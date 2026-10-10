@@ -4,3 +4,7 @@ dist/
 *.db
 uploads/*
 !uploads/.gitkeep
+
+__pycache__/
+backend/uploads/*
+!backend/uploads/.gitkeep
