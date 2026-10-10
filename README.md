@@ -24,11 +24,6 @@ autorisation, validation des entrées, tests avancés.
 | 6 | Upload de fichier non restreint | POST /api/users/me/avatar | CWE-434 | Élevée |
 | 7 | Manipulation de prix (logique métier) | POST /api/checkout | CWE-840 | Élevée |
 
-## Points identifiés, non corrigés
-
-- Secret JWT codé en dur et expiration de 30 jours (`backend/auth.py`)
-- Absence de limitation de débit sur le login
-- Headers de sécurité absents et CORS permissif
 
 ## Technologies
 
