@@ -62,10 +62,24 @@ Frontend : http://localhost:5173 · API : http://localhost:8000 (documentation s
 
 ```
 secureshop/
-├── backend/    API FastAPI, modèles, authentification, données de test
-└── frontend/   Application React (pages, composants, contextes)
+├── backend/
+│   ├── main.py            Routes de l'API (produits, commandes, admin, upload...)
+│   ├── auth.py            Authentification JWT et hachage des mots de passe
+│   ├── models.py          Modèles de la base de données (SQLAlchemy)
+│   ├── database.py        Connexion SQLite
+│   ├── seed_data.py       Données de test (utilisateurs, produits, commandes)
+│   ├── requirements.txt   Dépendances Python
+│   └── uploads/           Avatars téléversés (ignoré par Git)
+├── frontend/
+│   └── src/
+│       ├── pages/         Pages (accueil, produit, panier, checkout, admin...)
+│       ├── components/    Composants (barre de navigation)
+│       ├── context/       Authentification et panier
+│       └── api.js         Appels vers l'API
+├── docs/
+│   └── Rapport_SecureShop.pdf   Rapport de test d'intrusion
+└── README.md
 ```
-
 ## Périmètre
 
 Tout s'exécute sur la machine locale avec une base SQLite : aucun appel externe,
